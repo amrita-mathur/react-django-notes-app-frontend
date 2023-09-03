@@ -1,24 +1,25 @@
-import logo from './logo.svg';
-import './App.css';
+import Header from "./components/Header";
+// import "./App.css";
+import NotesListPage from "./pages/NotesListPage";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import NotePage from "./pages/NotePage";
+import CreateNote from "./pages/CreateNote";
+import LoginPage from "./pages/Login";
+import RegisterPage from "./pages/RegisterUser";
 
 function App() {
+  const loggedInUser = JSON.parse(sessionStorage.getItem("loggedInUser"))
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Router>
+      { loggedInUser && <Header />}
+      <Routes>
+        <Route path="/" element={<LoginPage />} />
+        <Route path="note/:id" element={<NotePage />} />
+        <Route path="create/" element={<CreateNote />} />
+        <Route path="notes/" element= {<NotesListPage />} />
+        <Route path="users/register/" element={<RegisterPage />}/>
+      </Routes>
+    </Router>
   );
 }
 
